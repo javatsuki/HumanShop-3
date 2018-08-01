@@ -1,6 +1,5 @@
 package com.example.Human.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //トップ画面へのマッピング
 public class HumanController {
 	
+	//トップページへのマッピングなので、DBの値を出すaddAttributeを書いてる
 	@RequestMapping("/Index")
 	public String Index(Model model) {
-		model.addAttribute("name,");
+		model.addAttribute("user_name", "名前");//カッコ内の左側が”キー”（箱の名前）、右側が"バリュー"（中身の名前）
 		return "Index";	
+		
 	}
 	
 	//ログインページへのマッピング
@@ -24,13 +25,13 @@ public class HumanController {
 	
 	//カートのページへのマッピング
 	@GetMapping("/Cart")
-	public String Cart(Model model) {
+	public String Cart() {
 		return "Cart";
 	}
 	
 	//マイページへのマッピング
 	@GetMapping("/User")
-	public String User(Model model) {
+	public String User() {
 		return "User";
 	}
 }

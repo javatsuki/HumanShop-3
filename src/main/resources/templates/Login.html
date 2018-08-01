@@ -11,7 +11,13 @@
 	<body>
 		<div class="container">
 			<h1>買い物をするにはログインしてや</h1>
-			
+			<table>
+            	<tr th:each="emp : ${emplist}" th:object="${emp}">
+                	<td th:text="*{user_name}"></td>
+                	<td th:text="*{password}"></td>
+                	<td th:text="*{address_1}"></td>
+            	</tr>
+        	</table>
 		</div>
 	</body>
 </html>
