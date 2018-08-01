@@ -13,7 +13,24 @@ public class HumanController {
 	@RequestMapping("/Index")
 	public String Index(Model model) {
 		model.addAttribute("name,");
-		return "Index";
-		
+		return "Index";	
+	}
+	
+	//ログインページへのマッピング
+	@GetMapping("/Login")
+	public String Login(Model model) {
+		return "Login";
+	}
+	
+	//カートのページへのマッピング
+	@GetMapping("/Cart")
+	public String Cart(Model model) {
+		return "Cart";
+	}
+	
+	//マイページへのマッピング
+	@GetMapping("/User")
+	public String User(Model model) {
+		return "User";
 	}
 }
