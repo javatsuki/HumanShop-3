@@ -15,11 +15,18 @@
 	<!-- 実際の画面表示は以下から -->
 	<body>
 		<div class="container">
-			<h1>Human Shopや。　ようきたな。ククク…</h1>
+			<h1>Human Shopや。ようきたな。ククク…</h1>
 			<a class="btn btn-default" href="/Login">ログイン・新規登録</a>
 			<a class="btn btn-default" href="/Cart">カートを見る</a>
 			<a class="btn btn-default" href="/User">マイページ</a>
 			<h1 th:text="${user_name}"></h1>
+			
+			<table>
+				<tr th:each="prod : ${list}"><!-- eachでループさしてる -->
+				    <td th:text="${prod.user_name}"></td>
+				    <td th:text="${prod.password}"></td>
+				</tr>
+			</table>
 		</div>
 	</body>
 </html>
