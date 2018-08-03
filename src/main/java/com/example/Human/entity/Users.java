@@ -1,39 +1,16 @@
 package com.example.Human.entity;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-
-import lombok.Getter;
-import lombok.Setter;
-
-@Entity(name="Users")
-@Getter
-@Setter
 public class Users {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private Integer Id;
+	String user_name;
 	
-	@NotNull
-	protected String Name;
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
 	
-	
-//	@Column
-//	protected String password;
-//	@Column
-//	protected String address1;
-//	@Column
-//	protected String address2;
-//	@Column
-//	protected String address3;
-//	@Column
-//	protected Date makeTime;
-//	@Column
-//	protected Date updateTime;
 }
 	
