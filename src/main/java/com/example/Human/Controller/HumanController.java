@@ -26,10 +26,10 @@ public class HumanController {
 	
 	@RequestMapping("/Index")
 	public String Index(Model model) {
-		List<Users> list = repo.findAll();
+		List<Users> users = repo.findAll();
 		
 		model.addAttribute("user_name", "名前");//カッコ内の左側が”キー”（箱の名前）、右側が"バリュー"（中身の名前）
-		model.addAttribute("users", list);
+		model.addAttribute("users", users);
 		return "Index";			
 	}
 	
