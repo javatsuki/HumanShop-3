@@ -22,9 +22,10 @@
 			<h1 th:text="${user_name}"></h1>
 			
 			<table>
-				<tr th:each="prod : ${list}"><!-- eachでループさしてる -->
-				    <td th:text="${prod.user_name}"></td>
-				    <td th:text="${prod.password}"></td>
+				<tr th:each="users : ${list}"><!-- eachでループさしてる -->
+				    <td th:text="${users.Id}"></td>
+				    <td th:text="${users.name}"></td>
+				    
 				</tr>
 			</table>
 		</div>

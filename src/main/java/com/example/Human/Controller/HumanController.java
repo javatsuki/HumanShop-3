@@ -15,23 +15,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.Human.Repository.HumanRepository;
 import com.example.Human.entity.Users;
 
-@ComponentScan
 @Controller
 //トップ画面へのマッピング
 public class HumanController {
 	
-	private static final String VIEW = null;
 	
 	//トップページへのマッピングなので、DBの値を出すaddAttributeを書いてる
 	@Autowired
-	HumanRepository repo;
+	private HumanRepository repo;
 	
 	@RequestMapping("/Index")
 	public String Index(Model model) {
-		List<Users> listUser = repo.findAll();
+		List<Users> list = repo.findAll();
 		
 		model.addAttribute("user_name", "名前");//カッコ内の左側が”キー”（箱の名前）、右側が"バリュー"（中身の名前）
-		model.addAttribute("list", listUser);
+		model.addAttribute("users", list);
 		return "Index";			
 	}
 	
