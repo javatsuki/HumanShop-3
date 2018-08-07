@@ -9,15 +9,27 @@
     <body> 
     <fieldset> 
       <h1>Login</h1> 
-      <form> 
+      <form method="post" action="/user"> 
         <div class="iconUser"></div> 
+        <label class="control-label">名前</label>
           <input type="text" placeholder="ユーザー名" required> 
           <br><br> 
         <div class="iconPassword"></div> 
+        <label class="control-label">パスワード</label>
       	<input type="password" placeholder="パスワード" required> 
       	<input type="submit" value="ログイン"> 
-      </form> 
+        </form> 
     </fieldset> 
+    
+    <div th:if="${person} != null">
+        <span>入力情報</span>
+        <div>
+            <span th:text="${person.iconUser}">ほげほげ</span> 
+            <span th:text="${person.iconPassword}">99</span> 
+            <span>歳</span>
+        </div>
+    </div>
+    
     </body> 
   </body> 
   </html> 
