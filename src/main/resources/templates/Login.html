@@ -3,21 +3,21 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Login</title>
-			
-
-	</head>
-	
-	<!-- 実際の画面表示は以下から -->
-	<body>
-		<div class="container">
-			<h1>買い物をするにはログインしてや</h1>
-			<table>
-            	<tr th:each="emp : ${emplist}" th:object="${emp}">
-                	<td th:text="*{user_name}"></td>
-                	<td th:text="*{password}"></td>
-                	<td th:text="*{address_1}"></td>
-            	</tr>
-        	</table>
-		</div>
-	</body>
-</html>
+		<link rel="stylesheet" href="resources/css/style.css"> 
+  </head> 
+  <body> 
+    <body> 
+    <fieldset> 
+      <h1>Login</h1> 
+      <form> 
+        <div class="iconUser"></div> 
+          <input type="text" placeholder="ユーザー名" required> 
+          <br><br> 
+        <div class="iconPassword"></div> 
+      	<input type="password" placeholder="パスワード" required> 
+      	<input type="submit" value="ログイン"> 
+      </form> 
+    </fieldset> 
+    </body> 
+  </body> 
+  </html> 
