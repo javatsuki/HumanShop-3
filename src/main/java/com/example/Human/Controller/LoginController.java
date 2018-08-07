@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
   	 
   	private static final Logger logger = LoggerFactory.getLogger(LoginController.class); 
   	 
-  	/** 
-  	 * Simply selects the home view to render by returning its name. 
-  	 */ 
+
  	@RequestMapping(value = "/Login") 
   	public String home(Locale locale, Model model) { 
   		 
