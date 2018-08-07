@@ -44,9 +44,9 @@ public class HumanController {
 		
 
 				
-	}
-	
-	@RequestMapping(name = "/", method = { RequestMethod.POST })
+	} 
+	//POSTをGETに変更
+	@RequestMapping(name = "/", method = { RequestMethod.GET })
     public String post(@ModelAttribute LoginForm form, Model model) {
         model.addAttribute("iconUser", form);
         model.addAttribute("iconPassword", form);
