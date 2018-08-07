@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
 import com.example.Human.entity.Products;
 import com.example.Human.entity.Users;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
 //トップ画面へのマッピング
@@ -33,8 +36,20 @@ public class HumanController {
 		List<Products> productsList = productsMapper.selectAll();
 		model.addAttribute("products", productsList);
 		
-		return "Index";			
+		return "Index";
+		
+
+				
 	}
+	
+	public void login(@RequestParam("login") String name) {
+		
+		char[] login;
+		return;
+	}
+	
+	
+	
 	 
 	//ログインページへのマッピング
 	@GetMapping("/Login")
