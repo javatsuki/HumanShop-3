@@ -6,11 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
 import com.example.Human.entity.Products;
 import com.example.Human.entity.Users;
+import com.example.Human.service.LoginForm;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
 //トップ画面へのマッピング
@@ -33,8 +40,21 @@ public class HumanController {
 		List<Products> productsList = productsMapper.selectAll();
 		model.addAttribute("products", productsList);
 		
-		return "Index";			
+		return "Index";
+		
+
+				
 	}
+	
+	@RequestMapping(name = "/", method = { RequestMethod.POST })
+    public String post(@ModelAttribute LoginForm form, Model model) {
+        model.addAttribute("iconUser", form);
+        model.addAttribute("iconPassword", form);
+        return "User";
+    }
+	
+	
+	
 	 
 	//ログインページへのマッピング
 	@GetMapping("/Login")
