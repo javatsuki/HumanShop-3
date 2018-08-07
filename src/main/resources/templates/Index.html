@@ -16,17 +16,21 @@
 	<body>
 		<div class="container">
 			<h1>Human Shopや。ようきたな。ククク…</h1>
-			<a class="btn btn-default" href="/Login">ログイン・新規登録</a>
+	<!--	<a class="btn btn-default" href="/Login">ログイン・新規登録</a>   -->	
 			<a class="btn btn-default" href="/Cart">カートを見る</a>
 			<a class="btn btn-default" href="/User">マイページ</a>
 			<h1 th:text="${user_name}"></h1>
+
 	
-	<!--  ログインフォーム -->		
-			<form th:action="@{/}" method="POST">
-    		<input type="text" name="login" value="" />
-    		<input type="submit" value="ログイン" />
-			</form>
+
+
+	<form action="/Login" method="post">
+
 			
+		<div>
+		  <input type="submit" value="ログイン・新規登録">
+		</div>
+	</form>
 			<table>
 				 <tr th:each="user : ${users}"><!-- 複数形のusersが箱の名前で、単数のuserが箱の中身-->
 				      <td th:text="${user.user_id}"></td>
