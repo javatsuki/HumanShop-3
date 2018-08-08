@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,7 @@ import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
 import com.example.Human.entity.Products;
 import com.example.Human.entity.Users;
-import com.example.Human.service.LoginForm;
+import com.example.Human.service.UserInfo;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -23,7 +24,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 //トップ画面へのマッピング
 public class HumanController {
 	
-	
+
 	//トップページへのマッピングなので、DBの値を出すaddAttributeを書いてる
 	@Autowired
 	UsersMapper usersMapper;
@@ -45,12 +46,40 @@ public class HumanController {
 
 				
 	} 
+	
+	
 
-	@RequestMapping(name = "/", method = { RequestMethod.POST })
-    public String post(@ModelAttribute LoginForm form, Model model) {
-        model.addAttribute("iconUser", form);
-        model.addAttribute("iconPassword", form);
+	@PostMapping(value = "/user")
+    public String post(UserInfo form, Model model) {
+		//System.out.println(form.getUserId());
+		//System.out.println(form.getPassword());
+		String userId = form.getUserId();
+		String userName = form.getUserName();
+		String password = form.getPassword();
+		String address1 = form.getAddress1();
+		String address2 = form.getAddress2();
+		String address3 = form.getAddress3();
+		
+		Users users = new Users();
+		users.setUser_id(userId);
+		users.setUser_name(userName);
+		users.setPassword(password);
+		users.setAddress1(address1);
+		users.setAddress2(address2);
+		users.setAddress3(address3);
+		
+		usersMapper.insertUserInfo(users);
+		
+        model.addAttribute("userId", userId);
+        model.addAttribute("userName", userName);
+        model.addAttribute("password", password);
+        model.addAttribute("address1", address1);
+        model.addAttribute("address2", address2);
+        model.addAttribute("address3", address3);
         return "User";
+        
+        
+        
     }
 	
 	

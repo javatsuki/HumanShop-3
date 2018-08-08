@@ -11,4 +11,6 @@ public interface UsersMapper {
 
 	List<Users> selectAll();
 	
+	void insertUserInfo(Users users);
 }
+
