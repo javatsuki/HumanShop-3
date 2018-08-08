@@ -45,8 +45,8 @@ public class HumanController {
 
 				
 	} 
-	//POSTをGETに変更
-	@RequestMapping(name = "/", method = { RequestMethod.GET })
+
+	@RequestMapping(name = "/", method = { RequestMethod.POST })
     public String post(@ModelAttribute LoginForm form, Model model) {
         model.addAttribute("iconUser", form);
         model.addAttribute("iconPassword", form);
@@ -54,13 +54,13 @@ public class HumanController {
     }
 	
 	
-	
+	//新規登録画面のページへのマッピング
+		@GetMapping("/NewAcount")
+		public String NewAcount() {
+			return "NewAcount";
+		}
 	 
-	//ログインページへのマッピング
-	@GetMapping("/Login")
-	public String Login(Model model) {
-		return "Login";
-	}
+
 	
 	//カートのページへのマッピング
 	@GetMapping("/Cart")
@@ -68,9 +68,5 @@ public class HumanController {
 		return "Cart";
 	}
 	
-	//マイページへのマッピング
-	@GetMapping("/User")
-	public String User() {
-		return "User";
-	}
+
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>User</title>
+			
+
+	</head>
+	
+	<!-- 実際の画面表示は以下から -->
+	<body>
+		<div class="container">
+			<h1>新規情報登録画面</h1>
+			<fieldset> 
+		      <h3>アカウント情報登録</h3> 
+		      <form method="post" action="/user"> 
+		        <div class="iconUser"></div> 
+		        <label class="control-label">ユーザーID</label>
+		          <input type="text" placeholder="メールアドレス" required> 
+		          <br><br> 
+		        <div class="iconUser"></div> 
+		        <label class="control-label">ユーザー名</label>
+		          <input type="text" placeholder="名前" required> 
+		          <br><br> 
+		        <div class="iconPassword"></div> 
+		        <label class="control-label">パスワード</label>
+		      	<input type="password" placeholder="パスワード" required> 
+		      	　　<br><br>
+		      	<input type="submit" value="登録"> 
+		        </form>
+		    </fieldset> 
+			
+		</div>
+	</body>
+</html>
