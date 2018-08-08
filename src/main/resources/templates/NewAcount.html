@@ -16,15 +16,19 @@
 		      <form method="post" action="/user"> 
 		        <div class="iconUser"></div> 
 		        <label class="control-label">ユーザーID</label>
-		          <input type="text" placeholder="メールアドレス" required> 
+		          <input type="text" placeholder="メールアドレス" name="userId" required> 
 		          <br><br> 
 		        <div class="iconUser"></div> 
 		        <label class="control-label">ユーザー名</label>
-		          <input type="text" placeholder="名前" required> 
+		          <input type="text" placeholder="名前" name="userName" required> 
 		          <br><br> 
 		        <div class="iconPassword"></div> 
 		        <label class="control-label">パスワード</label>
-		      	<input type="password" placeholder="パスワード" required> 
+		      	<input type="password" placeholder="パスワード" name="password" required> 
+		      	　　<br><br>
+		      	<div class="iconPassword"></div> 
+		        <label class="control-label">　住所　　</label>
+		      	<input type="text" placeholder="住所" name="address1" required> 
 		      	　　<br><br>
 		      	<input type="submit" value="登録"> 
 		        </form>

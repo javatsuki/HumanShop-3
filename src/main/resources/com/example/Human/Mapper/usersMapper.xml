@@ -6,4 +6,8 @@
     <select id="selectAll" resultType="com.example.Human.entity.Users">
         SELECT user_id,address1,user_name FROM Users
     </select>
+    
+    <insert id="insertUserInfo">
+    	insert into Users (user_id, user_name, password, address1) values (#{user_id}, #{user_name}, #{password}, #{address1})
+    </insert>
 </mapper>
