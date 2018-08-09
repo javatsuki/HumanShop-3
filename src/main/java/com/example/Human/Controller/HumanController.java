@@ -16,6 +16,7 @@ import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
 import com.example.Human.entity.Products;
 import com.example.Human.entity.Users;
+import com.example.Human.service.LoginUser;
 import com.example.Human.service.UserInfo;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
@@ -49,8 +50,16 @@ public class HumanController {
 	
 	
 
-	@PostMapping(value = "/user")
+	@PostMapping(value = "/Login")
     public String post(UserInfo form, Model model) {
+        return "Login";
+        
+        
+        
+    }
+	
+	@PostMapping(value = "/NewLogin")
+    public String getLogin(UserInfo form, Model model) {
 		//System.out.println(form.getUserId());
 		//System.out.println(form.getPassword());
 		String userId = form.getUserId();
@@ -76,18 +85,33 @@ public class HumanController {
         model.addAttribute("address1", address1);
         model.addAttribute("address2", address2);
         model.addAttribute("address3", address3);
-        return "User";
+        return "redirect:/Login";
         
-        
-        
-    }
+	}
+	
+
+	//ログイン処理
+	@PostMapping("/Products")
+	public String login(LoginUser form, Model model) {
+		
+		String userId = form.getUserId();
+		String password = form.getPassword();
+		
+		usersMapper.selectLoginUser(userId, password);
+		
+		Users users = usersMapper.selectLoginUser(userId, password);
+		System.out.println(users.getUser_id());
+		
+		return "Products";
+	}
+	
 	
 	
 	//新規登録画面のページへのマッピング
-		@GetMapping("/NewAcount")
-		public String NewAcount() {
-			return "NewAcount";
-		}
+	@GetMapping("/NewAcount")
+	public String NewAcount() {
+		return "NewAcount";
+	}
 	 
 
 	
@@ -96,6 +120,19 @@ public class HumanController {
 	public String Cart() {
 		return "Cart";
 	}
+	
+	
+	//マイページのページへのマッピング
+	@GetMapping("/User")
+	public String User() {
+		return "User";
+	}
+	
+	//商品一覧のページへのマッピング
+		@GetMapping("/Products")
+		public String Products() {
+			return "Products";
+		}
 	
 
 }

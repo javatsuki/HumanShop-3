@@ -12,5 +12,7 @@ public interface UsersMapper {
 	List<Users> selectAll();
 	
 	void insertUserInfo(Users users);
+	
+	Users selectLoginUser(String user_id, String password);
 }
 
