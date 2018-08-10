@@ -1,0 +1,39 @@
+<!-- ひとまず画面　　若槻 -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>HumanShop</title>
+			
+<!-- 画面修飾の為のcss,javascript,jqueryを使いますよ～ -->			
+		<link rel="stylesheet" href="/css/bootstrap.css" />
+		<script src="/js/jquery.js"></script>
+		<script src="/js/bootstrap.js"></script>
+	</head>
+	
+	<!-- 実際の画面表示は以下から -->
+	<body>
+		<div class="container">
+			<h1>Human Shopや。ようきたな。ククク…</h1>
+	<!--	<a class="btn btn-default" href="/Login">ログイン・新規登録</a>   -->	
+	<!-- 	<a class="btn btn-default" href="/Cart">カートを見る</a>    -->
+	<!--	<a class="btn btn-default" href="/User">マイページ</a>      -->	
+			<h1 th:text="${user_name}"></h1>
+
+	<form action="/Login" method="post">	
+		<div>
+		  <input type="submit" value="ログイン・新規登録">
+		</div>
+	</form>
+			<table>
+				 <tr th:each="user : ${users}"><!-- 複数形のusersが箱の名前で、単数のuserが箱の中身-->
+				      <td th:text="${user.user_id}"></td>
+				      <td th:text="${user.user_name}"></td><!-- 箱の中身の、user_nameっていうものを取り出す -->
+				      <td th:text="${user.address1}"></td>
+				 </tr>	
+			</table>	
+			
+		</div>
+	</body>
+</html>

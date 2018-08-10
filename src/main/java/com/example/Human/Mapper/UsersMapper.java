@@ -1,10 +1,12 @@
 package com.example.Human.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.Human.entity.Users;
+import com.example.Human.service.LoginUser;
 
 @Mapper
 public interface UsersMapper {
@@ -13,6 +15,6 @@ public interface UsersMapper {
 	
 	void insertUserInfo(Users users);
 	
-	Users selectLoginUser(String user_id, String password);
+	Users selectLoginUser(LoginUser form);
 }
 

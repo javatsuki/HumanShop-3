@@ -1,6 +1,8 @@
 package com.example.Human.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -99,13 +101,7 @@ public class HumanController {
 	@PostMapping("/Products")
 	public String login(LoginUser form, Model model) {
 		
-		String userId = form.getUserId();
-		String password = form.getPassword();
-		
-		usersMapper.selectLoginUser(userId, password);
-		
-		Users users = usersMapper.selectLoginUser(userId, password);
-		System.out.println(users.getUser_id());
+		Users users = usersMapper.selectLoginUser(form);
 		
 		return "Products";
 	}

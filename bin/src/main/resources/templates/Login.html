@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Login</title>
+		<link rel="stylesheet" href="resources/css/style.css"> 
+  </head> 
+  <body> 
+    <body> 
+    <fieldset> 
+      <h1>Login</h1> 
+      <form method="post" action="/Products"> 
+        <div class="iconUser"></div> 
+        <label class="control-label">ログインID</label>
+          <input type="text" placeholder="ユーザーID" name="userId" required> 
+          <br><br> 
+        <div class="iconPassword"></div> 
+        <label class="control-label">パスワード</label>
+      	<input type="password" placeholder="パスワード" name="password" required> 
+      	<input type="submit" value="ログイン"> 
+        </form>
+        <a class="btn btn-default" href="/NewAcount">新規登録</a> 
+    </fieldset> 
+    
+    <div th:if="${person} != null">
+        <span>入力情報</span>
+        <div>
+            <span th:text="${person.iconUser}">ほげほげ</span> 
+            <span th:text="${person.iconPassword}">99</span> 
+            <span>歳</span>
+        </div>
+    </div>
+    
+    </body> 
+  </body> 
+  </html> 
