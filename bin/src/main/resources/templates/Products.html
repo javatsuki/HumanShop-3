@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Products</title>
+			
+
+	</head>
+	
+	<!-- 実際の画面表示は以下から -->
+	<body>
+		<div class="container">
+			<h1>商品の詳細でおま</h1>
+			<a class="btn btn-default" href="/Cart">カートを見る</a>
+			<a class="btn btn-default" href="/User">マイページ</a>
+		</div>
+		
+		<div>
+			<table> 
+				 <tr th:each="product : ${products}">
+				 	  <td th:text="${product.product_name}"></td>
+				 	  <td th:text="${product.price}"></td>
+				 	  <td th:text="${product.image}"></td>
+				 	  <td th:text="${product.stock_amount}"></td>
+				 </tr>	
+			</table>
+		
+		</div>
+	</body>
+</html>

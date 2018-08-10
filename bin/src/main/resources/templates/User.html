@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>User</title>
+			
+
+	</head>
+	
+	<!-- 実際の画面表示は以下から -->
+	<body>
+		<div class="container">
+			<h1>あんさんの情報がここに詰まっとるわ…ククク…</h1>
+			
+			<a class="btn btn-default" href="/Cart">カートを見る</a>
+			<a class="btn btn-default" href="/Products">商品一覧</a>
+
+		</div>
+		
+
+			<div>
+				<label>ユーザー名</label>
+			<!--  	<p th:text="${userId}"></p>  ←キーを書く。キーを書いたら、バリューが表示される  
+				<p th:text="${password}"></p>  -->
+				<p th:text="${userName}"></p>
+			</div>
+
+		
+	</body>
+</html>

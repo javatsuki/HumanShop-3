@@ -2,14 +2,14 @@ package com.example.Human.service;
 
 public class LoginUser {
 
-	private String userId;
+	private String user_id;
 	private String password;
 	
-	public String getUserId() {
-		return userId;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser_id(String userId) {
+		this.user_id = userId;
 	}
 	public String getPassword() {
 		return password;

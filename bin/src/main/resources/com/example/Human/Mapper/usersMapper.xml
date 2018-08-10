@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Human.Mapper.UsersMapper">
+    <select id="selectAll" resultType="com.example.Human.entity.Users">
+        SELECT user_id,address1,user_name FROM Users
+    </select>
+    
+    <insert id="insertUserInfo">
+    	insert into Users (user_id, user_name, password, address1) values (#{user_id}, #{user_name}, #{password}, #{address1})
+    </insert>
+    
+    <select id="selectLoginUser" resultType="com.example.Human.entity.Users">
+    	select * from Users where user_id = #{user_id} and password = #{password}
+    </select>
+</mapper>
