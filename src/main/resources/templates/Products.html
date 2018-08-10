@@ -14,5 +14,17 @@
 			<a class="btn btn-default" href="/Cart">カートを見る</a>
 			<a class="btn btn-default" href="/User">マイページ</a>
 		</div>
+		
+		<div>
+			<table> 
+				 <tr th:each="product : ${products}">
+				 	  <td th:text="${product.product_name}"></td>
+				 	  <td th:text="${product.price}"></td>
+				 	  <td th:text="${product.image}"></td>
+				 	  <td th:text="${product.stock_amount}"></td>
+				 </tr>	
+			</table>
+		
+		</div>
 	</body>
 </html>

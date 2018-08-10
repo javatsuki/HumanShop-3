@@ -29,15 +29,11 @@
 			<table>
 				 <tr th:each="user : ${users}"><!-- 複数形のusersが箱の名前で、単数のuserが箱の中身-->
 				      <td th:text="${user.user_id}"></td>
-				      <td th:text="${user.user_name}"></td>
-				      <td th:text="${user.address1}"></td><!-- 箱の中身の、user_nameっていうものを取り出す -->
+				      <td th:text="${user.user_name}"></td><!-- 箱の中身の、user_nameっていうものを取り出す -->
+				      <td th:text="${user.address1}"></td>
 				 </tr>	
 			</table>	
-			<table> 
-				 <tr th:each="product : ${products}">
-				 	  <td th:text="${product.product_name}"></td>
-				 </tr>	
-			</table>
+			
 		</div>
 	</body>
 </html>

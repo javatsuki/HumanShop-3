@@ -42,13 +42,18 @@ public class HumanController {
 		List<Products> productsList = productsMapper.selectAll();
 		model.addAttribute("products", productsList);
 		
-		return "Index";
-		
-
-				
+		return "Index";		
 	} 
 	
-	
+//	@GetMapping("/Products")
+//	public String ShowProducts(Model model) {
+//		//商品マスタテーブル
+//		List<Products> productsList = productsMapper.selectAll();
+//		model.addAttribute("products", productsList);
+//		
+//		return "Products";		
+//	}
+//	
 
 	@PostMapping(value = "/Login")
     public String post(UserInfo form, Model model) {
