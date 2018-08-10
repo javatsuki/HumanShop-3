@@ -39,21 +39,21 @@ public class HumanController {
 		model.addAttribute("users", list);
 		
 		//商品マスタテーブル
-		List<Products> productsList = productsMapper.selectAll();
-		model.addAttribute("products", productsList);
+//		List<Products> productsList = productsMapper.selectAll();
+//		model.addAttribute("products", productsList);
 		
 		return "Index";		
 	} 
 	
-//	@GetMapping("/Products")
-//	public String ShowProducts(Model model) {
-//		//商品マスタテーブル
-//		List<Products> productsList = productsMapper.selectAll();
-//		model.addAttribute("products", productsList);
-//		
-//		return "Products";		
-//	}
-//	
+	@GetMapping("/Products")
+	public String ShowProducts(Model model) {
+		//商品マスタテーブル
+		List<Products> productsList = productsMapper.selectAll();
+		model.addAttribute("products", productsList);
+		
+		return "Products";		
+	}
+	
 
 	@PostMapping(value = "/Login")
     public String post(UserInfo form, Model model) {
