@@ -108,7 +108,7 @@ public class HumanController {
 	
 	
 	
-	//新規登録画面のページへのマッピング
+	//新規登録画面のページへのマッピングを
 	@GetMapping("/NewAcount")
 	public String NewAcount() {
 		return "NewAcount";
