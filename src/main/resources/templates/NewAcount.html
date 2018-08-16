@@ -9,6 +9,7 @@
 	
 	<!-- 実際の画面表示は以下から -->
 	<body>
+	<div style="text-align:center;">
 		<div class="container">
 			<h1>新規情報登録画面</h1>
 			<fieldset> 
@@ -27,13 +28,22 @@
 		      	<input type="password" placeholder="パスワード" name="password" required> 
 		      	　　<br><br>
 		      	<div class="iconPassword"></div> 
-		        <label class="control-label">　住所　　</label>
+		        <label class="control-label">住所1(必須)</label>
 		      	<input type="text" placeholder="住所" name="address1" required> 
 		      	　　<br><br>
+		      	<div class="iconPassword"></div> 
+		        <label class="control-label">住所2(任意)</label>
+		      	<input type="text" placeholder="住所" name="address2"> 
+		      	　　<br><br>
+		      	<div class="iconPassword"></div> 
+		        <label class="control-label">住所3(任意)</label>
+		      	<input type="text" placeholder="住所" name="address3"> 
+		      	　　<br><br>
 		      	<input type="submit" value="登録"> 
+		      	<input type="reset" value="リセット">
 		        </form>
-		    </fieldset> 
-			
+		    </fieldset> 			
 		</div>
+	</div>	
 	</body>
 </html>

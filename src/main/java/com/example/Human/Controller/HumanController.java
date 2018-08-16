@@ -103,7 +103,7 @@ public class HumanController {
 		
 		Users users = usersMapper.selectLoginUser(form);
 		
-		return "Products";
+		return "redirect:/Products";
 	}
 	
 	
@@ -129,11 +129,6 @@ public class HumanController {
 		return "User";
 	}
 	
-	//商品一覧のページへのマッピング
-		@GetMapping("/Products")
-		public String Products() {
-			return "Products";
-		}
-	
+
 
 }
