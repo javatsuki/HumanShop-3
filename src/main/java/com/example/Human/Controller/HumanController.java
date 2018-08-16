@@ -41,21 +41,21 @@ public class HumanController {
 		model.addAttribute("users", list);
 		
 		//商品マスタテーブル
-		List<Products> productsList = productsMapper.selectAll();
-		model.addAttribute("products", productsList);
+//		List<Products> productsList = productsMapper.selectAll();
+//		model.addAttribute("products", productsList);
 		
 		return "Index";		
 	} 
 	
-//	@GetMapping("/Products")
-//	public String ShowProducts(Model model) {
-//		//商品マスタテーブル
-//		List<Products> productsList = productsMapper.selectAll();
-//		model.addAttribute("products", productsList);
-//		
-//		return "Products";		
-//	}
-//	
+	@GetMapping("/Products")
+	public String ShowProducts(Model model) {
+		//商品マスタテーブル
+		List<Products> productsList = productsMapper.selectAll();
+		model.addAttribute("products", productsList);
+		
+		return "Products";		
+	}
+	
 
 	@PostMapping(value = "/Login")
     public String post(UserInfo form, Model model) {
@@ -69,6 +69,7 @@ public class HumanController {
     public String getLogin(UserInfo form, Model model) {
 		//System.out.println(form.getUserId());
 		//System.out.println(form.getPassword());
+		
 		String userId = form.getUserId();
 		String userName = form.getUserName();
 		String password = form.getPassword();
@@ -103,7 +104,7 @@ public class HumanController {
 		
 		Users users = usersMapper.selectLoginUser(form);
 		
-		return "Products";
+		return "redirect:/Products";
 	}
 	
 	
@@ -129,11 +130,6 @@ public class HumanController {
 		return "User";
 	}
 	
-	//商品一覧のページへのマッピング
-		@GetMapping("/Products")
-		public String Products() {
-			return "Products";
-		}
-	
+
 
 }
