@@ -1,40 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8"/>
-		<title>User</title>
-			
-
-	</head>
-	
-	<!-- 実際の画面表示は以下から -->
-	<body>
-		<div style="text-align:center;">
-			<h1>あんさんの情報がここに詰まっとるわ…ククク…</h1>
-			
-			<a class="btn btn-default" href="/Cart">カートを見る</a>
-			<br>
-			<a class="btn btn-default" href="/Products">商品一覧</a>
-			<br>
-			<a class="btn btn-default" href="/Index">ログアウト</a>
-		</div>
-		<br>
-		<div>
-		
-			<fieldset>
-				<table>
-					<label>ユーザー名</label>
-					<tr th:each="user : ${users}">
-						<td th:text="${user.user_id}"></td>
-						<td th:text="${user.user_name}"></td>
-						<td th:text="${user.address1}"></td>
-						<td th:text="${user.address2}"></td>
-						<td th:text="${user.address3}"></td>
-					</tr>
-				</table>
-			</fieldset>
-		</div>
-
-		
-	</body>
+<head>
+<meta charset="UTF-8"/>
+<title>User</title>
+</head>
+<!-- 実際の画面表示は以下から -->
+<body>
+<h1><a href="/Products">HumanShopJapan</a></h1>
+	<div style="text-align:center;">
+	<h2>あんさんの情報がここに詰まっとるわ…ククク…</h2>
+	<a class="btn btn-default" href="/Cart">カートを見る</a>
+	<br>
+	<a class="btn btn-default" href="/Products">商品一覧</a>
+	<br>
+	<a class="btn btn-default" href="/Index">ログアウト</a>
+	</div>
+<br>
+	<div>
+	<fieldset>
+	<table>
+	<label>ユーザー名</label>
+	<tr th:each="user : ${users}">
+	<td th:text="${user.user_id}"></td>
+	<td th:text="${user.user_name}"></td>
+	<td th:text="${user.address1}"></td>
+	<td th:text="${user.address2}"></td>
+	<td th:text="${user.address3}"></td>
+	</tr>
+	</table>
+	</fieldset>
+	</div>
+</body>
 </html>

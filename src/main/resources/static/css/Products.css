@@ -15,12 +15,17 @@ body {
 }
 
 div#pagebody{
-	width:1200px; margin:0 auto;		/*内容全体をセンタリング*/
+	width:1000px; margin:0 auto;		/*内容全体をセンタリング*/
 	background-color:white;		/*内容全体の背景色*/
 }
 
+/*=================================================
+メインメニュー
+=================================================*/
+
 ul#menu{
-	width:1160px; height:50px;		/*メニュー部分の幅と高さ*/
+	width:960px; height:50px;		/*メニュー部分の幅と高さ*/
+	margin:0px 35px;			/*上下マージン0px、左右マージン20px*/
 }
 
 #menu li{
@@ -33,7 +38,7 @@ ul#menu{
 	background-color:navy;		/*背景色*/
 	color:#ffffff;			/*文字色*/
 	display:block;			/*リンク部分をブロック表示にする*/
-	width:240px; height:35px;		/*幅と高さ*/
+	width:310px; height:35px;		/*幅と高さ*/
 	padding:15px 0px 0px 0px;		/*上パディング*/
 	text-align:center;			/*テキストをセンター揃えにする*/
 	text-decoration:none;		/*リンク部分を下線なしにする*/
