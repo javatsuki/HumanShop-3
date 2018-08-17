@@ -9,21 +9,30 @@
 	
 	<!-- 実際の画面表示は以下から -->
 	<body>
-		<div class="container">
+		<div style="text-align:center;">
 			<h1>あんさんの情報がここに詰まっとるわ…ククク…</h1>
 			
 			<a class="btn btn-default" href="/Cart">カートを見る</a>
+			<br>
 			<a class="btn btn-default" href="/Products">商品一覧</a>
-
+			<br>
+			<a class="btn btn-default" href="/Index">ログアウト</a>
 		</div>
-		
-
-			<div>
-				<label>ユーザー名</label>
-			<!--  	<p th:text="${userId}"></p>  ←キーを書く。キーを書いたら、バリューが表示される  
-				<p th:text="${password}"></p>  -->
-				<p th:text="${userName}"></p>
-			</div>
+		<br>
+		<div>
+			<fieldset>
+				<table>
+					<label>ユーザー名</label>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.user_id}"></td>
+						<td th:text="${user.user_name}"></td>
+						<td th:text="${user.address1}"></td>
+						<td th:text="${user.address2}"></td>
+						<td th:text="${user.address3}"></td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
 
 		
 	</body>

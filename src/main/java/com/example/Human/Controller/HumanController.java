@@ -47,6 +47,18 @@ public class HumanController {
 		return "Index";		
 	} 
 	
+	//マイページのページへのマッピング
+	@GetMapping("/User")
+	public String User(Model model) {
+		List<Users> list = usersMapper.selectAll();
+		model.addAttribute("users", list);
+		return "User";
+	}
+	
+	
+	
+	
+	
 	@GetMapping("/Products")
 	public String ShowProducts(Model model) {
 		//商品マスタテーブル
@@ -116,20 +128,15 @@ public class HumanController {
 	}
 	 
 
-	
+
 	//カートのページへのマッピング
 	@GetMapping("/Cart")
 	public String Cart() {
 		return "Cart";
 	}
+
 	
-	
-	//マイページのページへのマッピング
-	@GetMapping("/User")
-	public String User() {
-		return "User";
-	}
-	
+
 
 
 }
