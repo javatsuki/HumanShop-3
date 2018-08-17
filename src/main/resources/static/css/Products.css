@@ -47,3 +47,9 @@ ul#menu{
 #menu li a:hover{
 	background-color:#0000ff;		/*リンクにマウスが乗ったら背景色を変更する*/
 }
+
+img {
+	width: 250px;
+	height: 250px;
+	object-fit: cover;
+}
