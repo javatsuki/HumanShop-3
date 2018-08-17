@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-	<link rel="stylesheet" type="text/css" href="Products.css">
-		<meta charset="UTF-8"/>
-		<title>Products</title>
-	</head>
-	<!-- 実際の画面表示は以下から -->
-	<body>
-		<div class="container">
-			<h1>商品一覧</h1>
-			<a class="btn btn-default" href="/Cart">カートを見る</a>
-			<a class="btn btn-default" href="/User">マイページ</a>
-		</div>
-		
+<head>
+<link rel="stylesheet" type="text/css" href="/css/Products.css">
+<meta charset="UTF-8"/>
+<title>Products</title>
+</head>
+<!-- 実際の画面表示は以下から -->
+<body>
+	<div id="pagebody">
+	<!-- <div class="container"> -->
+		<h1>商品一覧</h1>
 		<div>
-			<table> 
-				 <tr th:each="product : ${products}">
-				 	  <td th:text="${product.product_name}"></td>
-				 	  <td th:text="${product.price}"></td>
-				 	  <td><img th:src="${product.image}"></td>
-				 	  <td th:text="${product.stock_amount}"></td>
-				 </tr>	
-			</table>
-		
+		<ul id="menu">
+		<li><a href="/Cart">カートを見る</a></li>
+		<li><a href="/User">マイページ</a></li>
+		<li><a href="/User">購入履歴</a></li>
+		</ul>
 		</div>
-	</body>
+	<!-- </div>	-->
+		<div>
+		<table> 
+		<tr th:each="product : ${products}">
+		<td th:text="${product.product_name}"></td>
+		<td th:text="${product.price} + '円' "></td>
+		<td><img th:src="${product.image}"></td>
+		<td th:text="${product.stock_amount}"></td>
+		</tr>	
+		</table>
+		</div>
+	</div>	
+</body>
 </html>

@@ -1,3 +1,44 @@
 @charset "UTF-8";
-body {font-size:95%;}
 
+/*=================================================
+全般的なスタイル
+=================================================*/
+*{
+	margin:0; padding:0;		/*全要素のマージン・パディングをリセット*/
+}
+
+body {
+	background-color:#cccccc;
+	font-size:95%;		/*フォントサイズを95%にする*/
+	font-family: 'Times New Roman','Trebuchet MS','Verdana',sans-serif;		/*フォントの種類*/
+	line-height:1.5;		/*行の高さを1.5倍にする*/
+}
+
+div#pagebody{
+	width:1200px; margin:0 auto;		/*内容全体をセンタリング*/
+	background-color:white;		/*内容全体の背景色*/
+}
+
+ul#menu{
+	width:1160px; height:50px;		/*メニュー部分の幅と高さ*/
+}
+
+#menu li{
+	list-style-type:none;		/*リストマーカーなしにする*/
+	display:inline;			/*リスト項目をインライン表示にする*/
+	float:left;			/*リスト項目を横に並べる*/
+}
+
+#menu li a{
+	background-color:navy;		/*背景色*/
+	color:#ffffff;			/*文字色*/
+	display:block;			/*リンク部分をブロック表示にする*/
+	width:240px; height:35px;		/*幅と高さ*/
+	padding:15px 0px 0px 0px;		/*上パディング*/
+	text-align:center;			/*テキストをセンター揃えにする*/
+	text-decoration:none;		/*リンク部分を下線なしにする*/
+}
+
+#menu li a:hover{
+	background-color:#0000ff;		/*リンクにマウスが乗ったら背景色を変更する*/
+}

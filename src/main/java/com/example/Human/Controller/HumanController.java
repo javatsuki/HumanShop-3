@@ -69,6 +69,7 @@ public class HumanController {
     public String getLogin(UserInfo form, Model model) {
 		//System.out.println(form.getUserId());
 		//System.out.println(form.getPassword());
+		
 		String userId = form.getUserId();
 		String userName = form.getUserName();
 		String password = form.getPassword();
