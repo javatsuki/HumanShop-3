@@ -17,14 +17,26 @@
 		<li><a href="/User">購入履歴</a></li>
 		</ul>
 		</div>
+		<form><input type="button" value="商品詳細" onClick="win_open()"></form>
+		<script type="text/javascript" th:inline="javascript">
+		function win_open() {
+		window.open("uenishi","","width=700,height=700"); 
+	    }
+		</script>	
 	<!-- </div>	-->
 		<div>
 		<table> 
-		<tr th:each="product : ${products}">
+		<tr th:each="product : ${products}">		
 		<td th:text="${product.product_name}"></td>
+		
+		
+		
 		<td th:text="${product.price} + '円' "></td>
 		<td><img th:src="${product.image}"></td>
 		<td th:text="${product.stock_amount}"></td>
+		
+			
+	
 		</tr>	
 		</table>
 		</div>

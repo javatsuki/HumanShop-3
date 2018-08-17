@@ -40,6 +40,8 @@ public class HumanController {
 		List<Users> list = usersMapper.selectAll();
 		model.addAttribute("users", list);
 		
+		
+		
 		//商品マスタテーブル
 //		List<Products> productsList = productsMapper.selectAll();
 //		model.addAttribute("products", productsList);
@@ -64,17 +66,24 @@ public class HumanController {
 		//商品マスタテーブル
 		List<Products> productsList = productsMapper.selectAll();
 		model.addAttribute("products", productsList);
+		return "Products";
 		
-		return "Products";		
+				
 	}
 	
 
 	@PostMapping(value = "/Login")
-    public String post(UserInfo form, Model model) {
+    public String showLogin(LoginUser form, Model model) {
+		
         return "Login";
         
-        
-        
+    }
+	
+	@PostMapping(value = "/LoginPage")
+    public String mainLogin(LoginUser form, Model model) {
+		
+		usersMapper.selectLoginUser(form);
+        return "redirect:/Products";
     }
 	
 	@PostMapping(value = "/NewLogin")
@@ -133,6 +142,11 @@ public class HumanController {
 	@GetMapping("/Cart")
 	public String Cart() {
 		return "Cart";
+	}
+	
+	@GetMapping("/uenishi")
+	public String Uenishi() {
+		return "uenishi";
 	}
 
 	
