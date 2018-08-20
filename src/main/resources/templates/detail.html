@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<link rel="stylesheet" type="text/css" href="/css/Products.css">
+		<meta charset="UTF-8">
+		<title>ProductsDetail</title>
+	</head>
+	<body>
+	<a>nazedarou</a>
+	<div>
+	<a> どうして値が出ないのよ</a>
+	<table> 
+		<tr th:each="product : ${products}">
+			<a> どうして値が出ないのよ</a>
+			<td th:text="${product.product_name}"></td>
+			<td><img th:src="${product.image}"></td>
+			<td th:text="${product.birthday} + '生まれ' "></td>
+			<td th:text="${product.detail}"></td>
+		</tr>
+	</table>
+	</div>
+	</body>
+</html>

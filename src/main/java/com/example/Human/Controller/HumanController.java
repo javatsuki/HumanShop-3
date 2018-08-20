@@ -144,12 +144,18 @@ public class HumanController {
 		return "Cart";
 	}
 	
+	//上西の商品詳細へのマッピング
 	@GetMapping("/uenishi")
 	public String Uenishi() {
 		return "uenishi";
 	}
 
-	
+	@GetMapping("/detail")
+	public String Detail(Model model) {
+		List<Products> productsList = productsMapper.selectAll();
+		model.addAttribute("products", productsList);
+		return "detail";
+	}
 
 
 

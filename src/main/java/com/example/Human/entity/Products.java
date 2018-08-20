@@ -6,6 +6,9 @@ public class Products {
 	Integer price;
 	String image;
 	Integer stock_amount;
+	String birthday;
+	String detail;
+	
 	public String getProduct_name() {
 		return product_name;
 	}
@@ -30,8 +33,18 @@ public class Products {
 	public void setStock_amount(Integer stock_amount) {
 		this.stock_amount = stock_amount;
 	}
-	
-	
+	public String getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 	
 
 }
