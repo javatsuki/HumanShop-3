@@ -2,42 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="stylesheet" type="text/css" href="/css/Products.css">
-<meta charset="UTF-8"/>
+
+<!--  商品詳細ボタンのスクリプト -->
+<script type="text/javascript" th:inline="javascript">
+	var id = "detail";
+	function win_open() {
+		window.open("detail","","width=1000,height=700"); 
+	   }
+	
+	<!--モーダルウィンドウ -->
+	function on() {
+	    document.getElementById("overlay").style.display = "block";
+	}
+
+	function off() {
+	    document.getElementById("overlay").style.display = "none";
+	}
+</script>
+
+<meta charset="UTF-8"  name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Products</title>
+
+<style>
+#overlay {
+    position: fixed;
+    display: none;
+    width: 80%;
+    height: 80%;
+    top: 5;
+    left: 5;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(200,200,200,0.8);
+    z-index: 2;
+    cursor: pointer;
+}
+</style>
 </head>
+
 <!-- 実際の画面表示は以下から -->
 <body>
+	<!-- モーダルウィンドウでの画面 -->
+	<div id="overlay" onclick="off()">
+	<table> 
+		<tr th:each="product : ${products}">
+			<td th:text="${product.product_name}"></td>
+			<td><img th:src="${product.image}"></td>
+			<td th:text="${product.birthday} + '生まれ' "></td>
+			<td th:text="${product.detail}"></td>
+		</tr>
+	</table>
+	</div>
+	<button onclick="on()">商品詳細</button>
+	
+	<!-- 通常の商品詳細画面 -->
 	<div id="pagebody">
-	<!-- <div class="container"> -->
-	<h1>HumanShopJapan</h1>
+		<h1>HumanShop Mistake</h1>
 		<div>
-		<ul id="menu">
-		<li><a href="/Cart">カートを見る</a></li>
-		<li><a href="/User">マイページ</a></li>
-		<li><a href="/User">購入履歴</a></li>
-		</ul>
+			<ul id="menu">
+				<li><a href="/Cart">カートを見る</a></li>
+				<li><a href="/User">マイページ</a></li>
+				<li><a href="/User">購入履歴</a></li>
+			</ul>
 		</div>
-		
+		<div>
+			<table> 
+				<tr th:each="product : ${products}">		
+					<td id=detail th:text="${product.product_name}"></td>
+					<td th:text="${product.price} + '円' "></td>
+					<td>
+						<img th:src="${product.image}">
+					</td>
+					<td th:text="${product.stock_amount}"></td>　<!-- 個　とかスペースとか出ない -->
+					<td>
+						<input type=button value="商品詳細" onClick="win_open()">
+					</td>
+				</tr>	
+			</table>	
+		</div>
+	</div>
+	
+	</div>
+	
+	
 	
 		
-	<!-- </div>	-->
-		<div>
-		<table> 
-		<tr th:each="product : ${products}">		
-		<td th:text="${product.product_name}"></td>
-		<td th:text="${product.price} + '円' "></td>
-		<td><img th:src="${product.image}"></td>
-		<td th:text="${product.stock_amount}"></td>
-		<td><input type="button" value="商品詳細" onClick="win_open()"></td>
-		</tr>	
-		</table>
-		<!--  商品詳細ボタン(上西ベタ書き）  -->
-		<script type="text/javascript" th:inline="javascript">
-		function win_open() {
-		window.open("detail","","width=1000,height=700"); 
-	    }
-		</script>
-		</div>
-	</div>	
 </body>
 </html>

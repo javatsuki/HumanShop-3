@@ -6,12 +6,10 @@
 		<title>ProductsDetail</title>
 	</head>
 	<body>
-	<a>nazedarou</a>
 	<div>
-	<a> どうして値が出ないのよ</a>
 	<table> 
 		<tr th:each="product : ${products}">
-			<a> どうして値が出ないのよ</a>
+			<a>どうして値が出ないのよ</a>
 			<td th:text="${product.product_name}"></td>
 			<td><img th:src="${product.image}"></td>
 			<td th:text="${product.birthday} + '生まれ' "></td>
