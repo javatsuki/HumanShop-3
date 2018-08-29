@@ -1,25 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<link rel="stylesheet" type="text/css" href="/css/Products.css">
-
-<!--  商品詳細ボタンのスクリプト -->
-<script type="text/javascript" th:inline="javascript">
-	var id = "detail";
-	function win_open() {
-		window.open("detail","","width=1000,height=700"); 
-	   }
-	
-	<!--モーダルウィンドウ -->
-	function on() {
-	    document.getElementById("overlay").style.display = "block";
-	}
-
-	function off() {
-	    document.getElementById("overlay").style.display = "none";
-	}
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous">
 </script>
-
+<link rel="stylesheet" type="text/css" href="/css/Products.css">
 <meta charset="UTF-8"  name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Products</title>
 
@@ -27,10 +14,10 @@
 #overlay {
     position: fixed;
     display: none;
-    width: 80%;
-    height: 80%;
-    top: 5;
-    left: 5;
+    width: 100%;
+    height: 100%;
+    top: 1;
+    left: 1;
     right: 0;
     bottom: 0;
     background-color: rgba(200,200,200,0.8);
@@ -53,7 +40,8 @@
 		</tr>
 	</table>
 	</div>
-	<button onclick="on()">商品詳細</button>
+	<button onclick="win_open()">商品詳細</button>	
+	
 	
 	<!-- 通常の商品詳細画面 -->
 	<div id="pagebody">
@@ -65,27 +53,126 @@
 				<li><a href="/User">購入履歴</a></li>
 			</ul>
 		</div>
+		<input type="button" class="delete" value="ちょっと目障りなので画像を消し去る">
 		<div>
 			<table> 
-				<tr th:each="product : ${products}">		
-					<td id=detail th:text="${product.product_name}"></td>
-					<td th:text="${product.price} + '円' "></td>
+				<tr th:each="product : ${products}">	
+					
+					<td><h3 id=detail th:text="${product.product_name}"></h3></td>	
+					<td><h3 th:text="${product.price} + '円' "></h3></td>
 					<td>
-						<img th:src="${product.image}">
+						<img class="face_image" id="10" th:src="${product.image}">
 					</td>
-					<td th:text="${product.stock_amount}"></td>　<!-- 個　とかスペースとか出ない -->
+					<td th:text="${product.stock_amount} + '　' "></td>
 					<td>
-						<input type=button value="商品詳細" onClick="win_open()">
+						<input type="button" class="details" th:id="${product.product_id}" value="商品詳細"><!-- onClick="on()" -->
+					</td>
+					<td>
+						&nbsp;&nbsp;<input type="button" id="buy" value= "購入する">
 					</td>
 				</tr>	
 			</table>	
 		</div>
 	</div>
+	<!-- ajax　ボタン -->
+	<input type="button" id="button"  class="button" value="ajaxボタン"/>
+    <br/>
+    <div id="text" class="text"></div>
+
+
+<!--テキストボックスとかチェックボタンとか-->
+	<!-- <form id = "searchform" action = "search" method = "POST"></form> -->
+    <button id = "searchbtn" type="submit" name = "searchbtn" onclick = "check()">投げる</button>
+  	
+
+    
+    
+<script type="text/javascript" th:inline="javascript">
+	var id = "detail";
+	function win_open() {
+		window.open("detail","","width=1000,height=700"); 
+	   }
 	
-	</div>
+	//Javascriptで書いたモーダルウィンドウ ？（消しても普通に動く）
+	/* function on() {
+	    document.getElementById("overlay").style.display = "block"; */
+	    /*document.querySelector(this);*/
+		/* var selectNo = $(this);
+		alert(selectNo);
+	} */
 	
+    //モーダルをOFFにする処理
+	function off() {
+	    document.getElementById("overlay").style.display = "none";
+	}
 	
+	//jQueryで書いたモーダルウィンドウ　商品詳細のボタンごとのIDをここで表示させる
+
+	$('.details').on('click', function() {
+		document.getElementById("overlay").style.display = "block";
+		var selectNo = $(this).attr('id');//this は、”押されたボタン”を示す
+		alert(selectNo);
+		//ajaxボタンの下に表示(成功！)
+		$.ajax({
+			type : 'GET',
+			url : 'getTestData',
+			dataType : 'json',
+			data : {zaki: selectNo },//JSON形式で書いてる　：で代入する
+			success : function(data) {//サーバーからの値（data)を受け取ってる
+				$('.text').html(data);//表示させる場所を指定してる(text　の属性を持つdivに)
+			},
+			error : function(data) {
+				alert('errorだっさ');
+			}
+		});
+	});
+		//サンプルのやつ
+	function check() {
+		var jsonString = $('form').serializeArray();
+		var formData = JSON.stringify(jsonString);
+		$.ajax({
+			type : 'POST',
+			url : 'searchFileInfoJson',//←いわゆる、地図のゴール
+			data : JSON.stringify(jsonString),
+			contentType : 'application/json',
+			datatype : 'json',//受け取るデータの形式
+			scriptCharset : 'utf-8',
+			success : function(data) {
+				alert('「エラー」を表示させる処理が出来てるから、合ってるんやで');
+				//console.log(data);
+			},
+			error : function(data) {
+				console.log(data);
+			}
+		});
+	}	
+
+
 	
-		
+	//目障り画像を消す処理
+	$(function() {
+		$('.delete').click(function() {
+			var isivile = $('.face_image').is(':visible');
+			if (isivile == true) {
+				$('.face_image').slideUp('slow')
+			} else {
+				$('.face_image').slideDown('slow')
+			}
+		});
+
+	});
+
+	//謎の動き
+	/* 	$(function(){
+	 $('.delete').toggle(
+	 function(){
+	 $('.face_image').slideDown()
+	 },
+	 function(){
+	 $('.face_image').slideUp()
+	 });
+	 });   
+	 */
+</script>
 </body>
 </html>

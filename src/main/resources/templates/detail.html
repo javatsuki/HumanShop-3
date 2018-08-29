@@ -2,16 +2,79 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/Products.css">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+		</script>
+		
+		<!-- <script>
+			src="https://code.jquery.com/jquery-3.3.1.min.js"
+		  	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		  	crossorigin="anonymous">
+		</script> -->
+		
 		<meta charset="UTF-8">
+		<script type="text/javascript" th:inline="javascript">
+			function getId(ele){
+				var id_value = ele.id;
+				console.log(id_value);	
+			}	
+		
+		$(function(){
+		    $('.accordion dt').on('click',function(){
+		        var $that = $(this);
+		        $that.next('dd').slideToggle(400,function(){
+		            $that.toggleClass('active');
+		        });
+		    });
+		});	
+		
+		//緑色に変わるやつだよ
+		$(function(){
+			$('.hoge2A').mouseover(function(){
+				$(this).css('background-color','green')
+			});
+		});
+		
+		//消えたり現れたりするよ
+		$(function(){
+			$('.hoge2A').toggle(
+			function(){
+				$('.blank').slideUp()
+			},
+			function(){
+				$('.blank').slideDown()
+			});
+		});
+		
+		//目障りなので画像を消す
+		$(function(){
+			$('#5').toggle(
+			function(){
+				$('.face_image').slideDown()
+			},
+			function(){
+				$('.face_image').slideUp()
+			});
+		});
+		
+		
+		
+			
+		</script>
+		 
 		<title>ProductsDetail</title>
 	</head>
 	<body>
+	<div class="hoge2A">マウスオーバーで変化するやで！(クリックでも然り)</div>
+	<div class="blank">&nbsp;</div>		
+	
+	<div class="delete">目障りなので画像を消し去る</div> 
+	<input type="button" class="delete" id="5" value="目障りなので画像を消し去る">
 	<div>
+	<input type="button" id="id01" value="show ID" onclick="getId(this);">
 	<table> 
 		<tr th:each="product : ${products}">
-			<a>どうして値が出ないのよ</a>
 			<td th:text="${product.product_name}"></td>
-			<td><img th:src="${product.image}"></td>
+			<td><img class="face_image" th:src="${product.image}"></td>
 			<td th:text="${product.birthday} + '生まれ' "></td>
 			<td th:text="${product.detail}"></td>
 		</tr>

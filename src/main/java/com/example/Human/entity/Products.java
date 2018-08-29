@@ -2,6 +2,7 @@ package com.example.Human.entity;
 
 public class Products {
 	
+	String product_id;
 	String product_name;
 	Integer price;
 	String image;
@@ -9,6 +10,12 @@ public class Products {
 	String birthday;
 	String detail;
 	
+	public String getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
+	}
 	public String getProduct_name() {
 		return product_name;
 	}

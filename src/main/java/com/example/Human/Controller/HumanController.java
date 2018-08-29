@@ -1,8 +1,11 @@
 package com.example.Human.Controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
@@ -20,6 +25,8 @@ import com.example.Human.entity.Products;
 import com.example.Human.entity.Users;
 import com.example.Human.service.LoginUser;
 import com.example.Human.service.UserInfo;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -57,10 +64,6 @@ public class HumanController {
 		return "User";
 	}
 	
-	
-	
-	
-	
 	@GetMapping("/Products")
 	public String ShowProducts(Model model) {
 		//商品マスタテーブル
@@ -71,7 +74,6 @@ public class HumanController {
 				
 	}
 	
-
 	@PostMapping(value = "/Login")
     public String showLogin(LoginUser form, Model model) {
 		
@@ -156,7 +158,42 @@ public class HumanController {
 		model.addAttribute("products", productsList);
 		return "detail";
 	}
+	
+	@GetMapping("/sample2")
+	public String sample2() {
+		return "sample2";
+	}
+	
+	/*@RequestMapping(value = "/sample2", method = RequestMethod.POST)
+	public String sample2(Model model) {
+		return "sample2";
+	}*/
 
-
-
+	
+	@GetMapping("/sample")
+	public String sample() {
+		return "sample";
+	}
+	
+	//[商品詳細]ボタンを押したときのajaxの動き
+	@RequestMapping(value = "getTestData", method = RequestMethod.GET)
+	@ResponseBody
+	
+	public String[] getTestData(String zaki) throws JsonParseException {
+		String[] datas = {zaki, "え…、", "えいじゃっくすが…", "動いてるやないか！！"};
+	    return datas;
+	}
+	/*
+	public String getTestData(String zaki) throws JsonParseException {
+		String datas = zaki;
+	    return datas;
+	}*/
+	
+	//ajax投げるサンプル　http://ponkotsusechan.hatenadiary.jp/entry/2016/02/01/173000_1
+    @ResponseBody
+	@RequestMapping(value = "/searchFileInfoJson", method = RequestMethod.POST, produces="application/json; charset=UTF-8")
+	public String searchFileInfoJson(@RequestBody String json) throws IOException, ServletException {
+        //処理をあれこれ
+    	return "でけた！！";
+    }
 }
