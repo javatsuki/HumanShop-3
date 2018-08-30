@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.Human.Mapper.ProductsDetailMapper;
 import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
 import com.example.Human.entity.Products;
+import com.example.Human.entity.ProductsDetail;
 import com.example.Human.entity.Users;
 import com.example.Human.service.LoginUser;
 import com.example.Human.service.UserInfo;
@@ -40,6 +42,7 @@ public class HumanController {
 	UsersMapper usersMapper;
 	@Autowired
 	ProductsMapper productsMapper;
+	ProductsDetailMapper productsDetailMapper;
 	
 	@GetMapping("/Index")
 	public String Index(Model model) {
@@ -48,10 +51,9 @@ public class HumanController {
 		model.addAttribute("users", list);
 		
 		
-		
 		//商品マスタテーブル
-//		List<Products> productsList = productsMapper.selectAll();
-//		model.addAttribute("products", productsList);
+		List<Products> productsList = productsMapper.selectAll();
+		model.addAttribute("products", productsList);
 		
 		return "Index";		
 	} 
@@ -67,12 +69,19 @@ public class HumanController {
 	@GetMapping("/Products")
 	public String ShowProducts(Model model) {
 		//商品マスタテーブル
-		List<Products> productsList = productsMapper.selectAll();
-		model.addAttribute("products", productsList);
-		return "Products";
-		
-				
+		List<Products> productsList = productsMapper.selectAll();//productsクラスの型のリスト　　に、セレクトした画像、名前、詳細を　入れ込んでる
+		model.addAttribute("products", productsList);//モデルのデータをヴューに表示させる
+		return "Products";		
 	}
+	
+	//モーダルウィンドウでの商品詳細8/30
+	@GetMapping("/ShowProductsDetail")
+	public String ShowProductsDetail(Model model ) {
+		List<ProductsDetail> ProductsDetailslList = productsDetailMapper.products_detail();
+		model.addAttribute("productsDetail");
+		return "Products";		
+	}
+	
 	
 	@PostMapping(value = "/Login")
     public String showLogin(LoginUser form, Model model) {
@@ -164,23 +173,17 @@ public class HumanController {
 		return "sample2";
 	}
 	
-	/*@RequestMapping(value = "/sample2", method = RequestMethod.POST)
-	public String sample2(Model model) {
-		return "sample2";
-	}*/
-
-	
 	@GetMapping("/sample")
 	public String sample() {
 		return "sample";
 	}
 	
 	//[商品詳細]ボタンを押したときのajaxの動き
-	@RequestMapping(value = "getTestData", method = RequestMethod.GET)
+	@RequestMapping(value = "getProductsId", method = RequestMethod.GET)
 	@ResponseBody
 	
-	public String[] getTestData(String zaki) throws JsonParseException {
-		String[] datas = {zaki, "え…、", "えいじゃっくすが…", "動いてるやないか！！"};
+	public String[] getProductsId(String zaki) throws JsonParseException {
+		String[] datas = {zaki, "え…、", "えいじゃっくすが…", "動いてるやないか！！", "もう完成したも同然やな"};
 	    return datas;
 	}
 	/*

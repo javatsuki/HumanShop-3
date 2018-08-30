@@ -3,12 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.Human.Mapper.ProductsMapper">
+
 	<select id="selectAll" resultType="com.example.Human.entity.Products">
-    	SELECT product_id, product_name, price, image, stock_amount, birthday, detail FROM Products
+    	SELECT product_id, product_name, price, image, stock_amount, birthday, detail FROM Products <!-- where product_id = 5 -->
 	</select>
 	
 	<!--  商品詳細で出したいとこ -->
 	<select id="products_detail" resultType="com.example.Human.entity.Products">
-		SELECT product_name, image, detail FROM Products where product_id = #{zaki}
+		SELECT product_name, detail FROM Products where product_id = 5
 	</select>
 </mapper>

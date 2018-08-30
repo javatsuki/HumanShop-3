@@ -32,12 +32,19 @@
 	<!-- モーダルウィンドウでの画面 -->
 	<div id="overlay" onclick="off()">
 	<table> 
-		<tr th:each="product : ${products}">
-			<td th:text="${product.product_name}"></td>
-			<td><img th:src="${product.image}"></td>
+		<!-- <tr th:each="product : ${products}">
+			<td><h3 th:text="${product.product_name}"></h3></td>
+			<td><img th:src="${product.image}"></td>			
 			<td th:text="${product.birthday} + '生まれ' "></td>
 			<td th:text="${product.detail}"></td>
+		</tr> -->
+		<tr th:each="productsDetail : ${products}">
+			<td><h1 th:text="${productsDetail.product_name}"></h1></td>
+			<td><img th:src="${productsDetail.image}"></td>			
+			<td th:text="${productsDetail.birthday} + '生まれ' "></td>
+			<td th:text="${productsDetail.detail}"></td>
 		</tr>
+		
 	</table>
 	</div>
 	<button onclick="win_open()">商品詳細</button>	
@@ -115,7 +122,7 @@
 		//ajaxボタンの下に表示(成功！)
 		$.ajax({
 			type : 'GET',
-			url : 'getTestData',
+			url : 'getProductsId',
 			dataType : 'json',
 			data : {zaki: selectNo },//JSON形式で書いてる　：で代入する
 			success : function(data) {//サーバーからの値（data)を受け取ってる
