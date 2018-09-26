@@ -15,6 +15,9 @@ public interface UsersMapper {
 	
 	void insertUserInfo(Users users);
 	
+	
 	Users selectLoginUser(LoginUser form);
-}
+
+	List<Users> selectLoginUser();
+} 
 

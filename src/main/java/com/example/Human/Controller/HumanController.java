@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.xmlunit.builder.Input;
 
-import com.example.Human.Mapper.ProductsDetailMapper;
 import com.example.Human.Mapper.ProductsMapper;
 import com.example.Human.Mapper.UsersMapper;
 import com.example.Human.entity.Products;
-import com.example.Human.entity.ProductsDetail;
 import com.example.Human.entity.Users;
 import com.example.Human.service.LoginUser;
 import com.example.Human.service.UserInfo;
@@ -33,23 +40,25 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
-//トップ画面へのマッピング
+@SessionAttributes(names = "reqForm")//セッション保持のアノテーションやで//
+//@SessionAttributes(value = "inputForm")
+
+
 public class HumanController {
+
 	
 
-	//トップページへのマッピングなので、DBの値を出すaddAttributeを書いてる
 	@Autowired
 	UsersMapper usersMapper;
 	@Autowired
 	ProductsMapper productsMapper;
-	ProductsDetailMapper productsDetailMapper;
 	
+	//トップページへのマッピングなので、DBの値を出すaddAttributeを書いてる
 	@GetMapping("/Index")
-	public String Index(Model model) {
+	public String index(Model model) {
 		//ユーザーマスタテーブル
 		List<Users> list = usersMapper.selectAll();
 		model.addAttribute("users", list);
-		
 		
 		//商品マスタテーブル
 		List<Products> productsList = productsMapper.selectAll();
@@ -58,49 +67,15 @@ public class HumanController {
 		return "Index";		
 	} 
 	
-	//マイページのページへのマッピング
-	@GetMapping("/User")
-	public String User(Model model) {
-		List<Users> list = usersMapper.selectAll();
-		model.addAttribute("users", list);
-		return "User";
+	//新規登録画面のページへのマッピング
+	@GetMapping("/NewAcount")
+	public String newAcount() {
+		return "NewAcount";
 	}
-	
-	@GetMapping("/Products")
-	public String ShowProducts(Model model) {
-		//商品マスタテーブル
-		List<Products> productsList = productsMapper.selectAll();//productsクラスの型のリスト　　に、セレクトした画像、名前、詳細を　入れ込んでる
-		model.addAttribute("products", productsList);//モデルのデータをヴューに表示させる
-		return "Products";		
-	}
-	
-	//モーダルウィンドウでの商品詳細8/30
-	@GetMapping("/ShowProductsDetail")
-	public String ShowProductsDetail(Model model ) {
-		List<ProductsDetail> ProductsDetailslList = productsDetailMapper.products_detail();
-		model.addAttribute("productsDetail");
-		return "Products";		
-	}
-	
-	
-	@PostMapping(value = "/Login")
-    public String showLogin(LoginUser form, Model model) {
-		
-        return "Login";
-        
-    }
-	
-	@PostMapping(value = "/LoginPage")
-    public String mainLogin(LoginUser form, Model model) {
-		
-		usersMapper.selectLoginUser(form);
-        return "redirect:/Products";
-    }
-	
+
+	//新規登録したら、DBに情報を挿入して、そのままログインページへリダイレクト
 	@PostMapping(value = "/NewLogin")
     public String getLogin(UserInfo form, Model model) {
-		//System.out.println(form.getUserId());
-		//System.out.println(form.getPassword());
 		
 		String userId = form.getUserId();
 		String userName = form.getUserName();
@@ -125,72 +100,179 @@ public class HumanController {
         model.addAttribute("address1", address1);
         model.addAttribute("address2", address2);
         model.addAttribute("address3", address3);
-        return "redirect:/Login";
-        
+        return "redirect:/Login";       
 	}
 	
-
 	//ログイン処理
+	@PostMapping(value = "/LoginPage")
+    public @ResponseBody String mainLogin(LoginUser form) {
+		List<Users> loginList = usersMapper.selectLoginUser();//select文で引っ張った内容を、Users型のloginListに代入
+		 for(int i = 0; i < loginList.size(); i++){
+	            Users u = loginList.get(i);//DB情報が入ったリストの、〇個めを u　に代入
+	            if(form.getUser_id().equals(u.getUser_id()) &&//フォームのidと、リストの〇個目のidとを比較
+	            		form.getPassword().equals(u.getPassword())) {
+
+					//return "redirect:/CreateSession";
+	            	//return "/CreateSession";
+	               	Model model = null;
+	               /*	String str1 = "redirect:";
+	               	String str2 = request(model, form);//←最終的にProductsのファイルをリターンしている
+	            	return str1 + str2;//←これがProductsファイルへのリダイレクト*/
+	               	return "redirect:" + request(model, form);
+	               	}
+	        }
+		 return "/MissLogin";
+	}
+	
+	
+	//セッション保持こっち側を参照→https://qiita.com/shibafu/items/f46f0fd529554b8cc1b2
+	//@PostMapping(value = "CreateSession")//"hoge/result"から変えた　　←マッピングいらないよby勝
+	public String request(Model model,
+			@ModelAttribute("RequestForm")LoginUser arg_rq) {//リクエストで送信されてきた。この情報はセッションに保存されない
+		//セッション格納
+		setRequestForm(arg_rq);//あれ？コメントアウトしてもセッション格納されてるんだが…
+		//return "hoge/result";
+		//return "redirect:/SetSession";//これは何にしても一緒？
+		String req = request2(model, arg_rq);
+		return req;
+	}
+	
+	//@PostMapping(value = "SetSession")//Post→Getに変えた　　←このマッピングもいらないよby勝
+	public String request2(Model model,
+			@ModelAttribute("reqFom")LoginUser session_rq) {//セッションから引き出しているオブジェクト
+		//好きなデータを使いましょう
+		session_rq.getUser_id();
+		return "/Products";
+	}
+	//↓↓まったく仕事してないで　by勝
+	//肝となる セッションのオブジェクト代入格納メソッド
+	@ModelAttribute("reqForm")//このメソッドをコメントアウトしたら「こんにちはnull」になる
+	public LoginUser setRequestForm(LoginUser requesetForm) {
+		return requesetForm;
+	}
+	
+	/*@GetMapping(value = "/complete")
+	public String complete(
+			@Validated(value = {LoginUser.Input1.class, LoginUser.Input2.class, LoginUser.Input3.class}) LoginUser form,
+			BindingResult result,
+			SessionStatus sessionStatus,
+			RedirectAttributes redirectAttributes) {
+				if(result.hasErrors()) {
+					return "Users";
+				}
+			//いらなくなったので破棄
+			sessionStatus.setComplete();
+			redirectAttributes.addFlashAttribute("LoginUser", form);
+			return "redirect:/Index";
+	}
+	*/
+	
+	//セッション保持こちらを参考→https://blog.okazuki.jp/entry/2015/07/05/214538
+	/*@ModelAttribute("inputForm")
+	LoginUser inputForm() {
+		System.out.println("inputForm渡せてるやん！！セッションでけとるやん！！！");
+		return new LoginUser();
+	}
+	//これが呼ばれる前にinputForm()メソッドが呼ばれる
+	@GetMapping(value = "/input1")
+	public String input1(LoginUser form) {
+		return "User";
+	}
+	//必要なくなったらSessionStatesのCompleteで破棄できます
+	@GetMapping(value = "/complete")
+	public String complete(
+			@Validated(value = {LoginUser.Input1.class, LoginUser.Input2.class, LoginUser.Input3.class}) LoginUser form,
+			BindingResult result,
+			SessionStatus sessionStatus,
+			RedirectAttributes redirectAttributes) {
+				if(result.hasErrors()) {
+					return "Users";
+				}
+			//いらなくなったので破棄
+			sessionStatus.setComplete();
+			redirectAttributes.addFlashAttribute("LoginUser", form);
+			return "redirect:/Index";
+	}*/
+     
+	
+	
+	
+	
+	//ログイン失敗ページへのマッピング
+	@GetMapping("/MissLogin")
+	public String missLogin() {
+		return "MissLogin";
+	}
+
+	//商品一覧ページ
 	@PostMapping("/Products")
+	public String showProducts(Model model) {
+		List<Products> productsList = productsMapper.selectAll();//productsクラスの型のリスト　　に、セレクトした画像、名前、詳細を　入れ込んでる
+		model.addAttribute("products", productsList);//モデルのデータをヴューに表示させる
+		return "Products";		
+	}
+
+	//マイページのページへのマッピング
+	@GetMapping("/User")
+	public String user(Model model) {
+		List<Users> list = usersMapper.selectAll();
+		model.addAttribute("users", list);
+		return "User";
+	}
+	/*@GetMapping("/detail")
+	public String Detail(Model model) {
+		List<Products> productslList = productsMapper.products_detail();//変更前：productsMapper.『products_detail』の部分を変えればいいだけ！！
+		model.addAttribute("productsDetail", productslList);//変更前："products"
+		return "detail";
+	}*/
+	
+	/*@PostMapping(value = "/Login")
+    public String showLogin(LoginUser form, Model model) {	
+        return "Login";  
+    }*/
+	
+	
+	
+	//ログイン処理…じゃないぽい。。たぶん要らん
+	/*@PostMapping("/Products")
 	public String login(LoginUser form, Model model) {
-		
 		Users users = usersMapper.selectLoginUser(form);
-		
-		return "redirect:/Products";
-	}
-	
-	
-	
-	//新規登録画面のページへのマッピングをを
-	@GetMapping("/NewAcount")
-	public String NewAcount() {
-		return "NewAcount";
-	}
-	 
+		//List<Users>
+		if(users.getUser_name()!=null && users.getPassword()!=null) {
+			return "redirect:/Products";
+
+		}else {
+			return "/MissLogin";
+		}
+	}*/
 
 
 	//カートのページへのマッピング
 	@GetMapping("/Cart")
-	public String Cart() {
+	public String cart() {
 		return "Cart";
-	}
-	
-	//上西の商品詳細へのマッピング
-	@GetMapping("/uenishi")
-	public String Uenishi() {
-		return "uenishi";
-	}
+	}	
 
-	@GetMapping("/detail")
-	public String Detail(Model model) {
-		List<Products> productsList = productsMapper.selectAll();
-		model.addAttribute("products", productsList);
-		return "detail";
-	}
-	
-	@GetMapping("/sample2")
-	public String sample2() {
-		return "sample2";
-	}
-	
-	@GetMapping("/sample")
-	public String sample() {
-		return "sample";
-	}
-	
-	//[商品詳細]ボタンを押したときのajaxの動き
-	@RequestMapping(value = "getProductsId", method = RequestMethod.GET)
+	//[商品詳細ボタンを押すと、それぞれにIDが付与されて、そのIDでselectしたレコードをモーダルで表示させる]
+	@RequestMapping(value = "getProductsList", method = RequestMethod.GET)
 	@ResponseBody
-	
-	public String[] getProductsId(String zaki) throws JsonParseException {
-		String[] datas = {zaki, "え…、", "えいじゃっくすが…", "動いてるやないか！！", "もう完成したも同然やな"};
-	    return datas;
-	}
-	/*
-	public String getTestData(String zaki) throws JsonParseException {
+	public List<Products> getProductsList(String zaki) {  	
 		String datas = zaki;
-	    return datas;
-	}*/
+		List<Products> productslList = productsMapper.products_detail(datas);//呼び出す側は抽象的な値にせねば
+		//mav.addObject("products", productslList);
+		return productslList;//リターンしたいのは、IDを代入してselectしてきたSQLのレコード！！	
+	}
+	
+	
+	//カートに入れるボタンでモーダル開く処理
+	@RequestMapping(value = "getIntoCart", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Products> getIntoCart(String inCartHuman) {  	
+		String adatas = inCartHuman;
+		List<Products> productslList = productsMapper.products_detail(adatas);//呼び出す側は抽象的な値にせねば
+		return productslList;
+	}
+	
 	
 	//ajax投げるサンプル　http://ponkotsusechan.hatenadiary.jp/entry/2016/02/01/173000_1
     @ResponseBody

@@ -11,4 +11,6 @@ public interface ProductsMapper {
 	
 	List<Products> selectAll();
 	
+	List<Products> products_detail(String productsId);//Controllerの方と型を合わせる！
+	
 }

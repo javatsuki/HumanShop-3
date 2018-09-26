@@ -72,7 +72,7 @@
 	<div>
 	<input type="button" id="id01" value="show ID" onclick="getId(this);">
 	<table> 
-		<tr th:each="product : ${products}">
+		<tr th:each="product : ${productsDetail}">
 			<td th:text="${product.product_name}"></td>
 			<td><img class="face_image" th:src="${product.image}"></td>
 			<td th:text="${product.birthday} + '生まれ' "></td>

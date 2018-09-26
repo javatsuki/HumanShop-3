@@ -8,7 +8,7 @@
 }
 
 body {
-	background-color:#e6fff7;
+	/* background-color:#c0c0c0; */
 	font-size:95%;		/*フォントサイズを95%にする*/
 	font-family: 'Times New Roman','Trebuchet MS','Verdana',sans-serif;		/*フォントの種類*/
 	line-height:1.5;		/*行の高さを1.5倍にする*/
@@ -25,7 +25,7 @@ div#pagebody{
 
 ul#menu{
 	width:960px; height:50px;		/*メニュー部分の幅と高さ*/
-	margin:0px 35px;			/*上下マージン0px、左右マージン20px*/
+	margin:0px auto;			/*上下マージン0px、左右マージン20px*/
 }
 
 #menu li{
@@ -35,7 +35,7 @@ ul#menu{
 }
 
 #menu li a{
-	background-color:navy;		/*背景色*/
+	background-color:#400040;		/*背景色*/
 	color:#ffffff;			/*文字色*/
 	display:block;			/*リンク部分をブロック表示にする*/
 	width:310px; height:35px;		/*幅と高さ*/
@@ -52,4 +52,9 @@ img {
 	width: 350px;
 	height: 350px;
 	object-fit: cover;
+}
+
+.detailInfo{ 
+    position:relative; 
+     top:100px; 
 }

@@ -5,11 +5,11 @@
 <mapper namespace="com.example.Human.Mapper.ProductsMapper">
 
 	<select id="selectAll" resultType="com.example.Human.entity.Products">
-    	SELECT product_id, product_name, price, image, stock_amount, birthday, detail FROM Products <!-- where product_id = 5 -->
+    	SELECT * FROM Products 
 	</select>
 	
 	<!--  商品詳細で出したいとこ -->
 	<select id="products_detail" resultType="com.example.Human.entity.Products">
-		SELECT product_name, detail FROM Products where product_id = 5
+		SELECT * FROM Products where product_id = #{productsId}<!-- #{selectNo} -->
 	</select>
 </mapper>

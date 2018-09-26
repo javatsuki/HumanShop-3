@@ -9,9 +9,8 @@
 <link rel="stylesheet" type="text/css" href="/css/Products.css">
 <meta charset="UTF-8"  name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Products</title>
-
 <style>
-#overlay {
+#overlay ,#cartOverlay{
     position: fixed;
     display: none;
     width: 100%;
@@ -29,29 +28,33 @@
 
 <!-- 実際の画面表示は以下から -->
 <body>
-	<!-- モーダルウィンドウでの画面 -->
+	<!-- 商品詳細モーダルウィンドウでの画面 -->
 	<div id="overlay" onclick="off()">
-	<table> 
-		<!-- <tr th:each="product : ${products}">
-			<td><h3 th:text="${product.product_name}"></h3></td>
-			<td><img th:src="${product.image}"></td>			
-			<td th:text="${product.birthday} + '生まれ' "></td>
-			<td th:text="${product.detail}"></td>
-		</tr> -->
-		<tr th:each="productsDetail : ${products}">
-			<td><h1 th:text="${productsDetail.product_name}"></h1></td>
-			<td><img th:src="${productsDetail.image}"></td>			
-			<td th:text="${productsDetail.birthday} + '生まれ' "></td>
-			<td th:text="${productsDetail.detail}"></td>
-		</tr>
-		
-	</table>
+		<div class=detailInfo style="text-align:center;">
+			<img class=table1>
+			<h1 class=table2></h1>
+			<a><h4 class=table3></h4></a>
+			<h3 class=table4></h3>
+		</div>
 	</div>
-	<button onclick="win_open()">商品詳細</button>	
 	
+	<!-- カートに入れるモーダルウィンドウでの画面 -->
+	<div id="cartOverlay" onclick="off()">
+		<div class=intoCart style="text-align:center;">
+			<img class=inCart1><br>
+			<h4><a class=inCart2></a>をカートに入れました</h4>
+			<form action="/Cart" method="get">	
+				<div>
+				  <input type="submit" value="カートを確認する">
+				</div>
+			</form>
+			
+		</div>	
+	</div>
 	
-	<!-- 通常の商品詳細画面 -->
+	<!-- 通常の商品詳細画面 -->	
 	<div id="pagebody">
+		<p th:text="'こんにちは' + ${reqForm} + '  ククク…'"/>
 		<h1>HumanShop Mistake</h1>
 		<div>
 			<ul id="menu">
@@ -63,76 +66,81 @@
 		<input type="button" class="delete" value="ちょっと目障りなので画像を消し去る">
 		<div>
 			<table> 
-				<tr th:each="product : ${products}">	
-					
-					<td><h3 id=detail th:text="${product.product_name}"></h3></td>	
+				<tr th:each="product : ${products}">		
+					<td><h2 id=detail th:text="${product.product_name}"></h2></td>	
+					<td><img class="face_image" id="10" th:src="${product.image}"></td>
 					<td><h3 th:text="${product.price} + '円' "></h3></td>
-					<td>
-						<img class="face_image" id="10" th:src="${product.image}">
-					</td>
-					<td th:text="${product.stock_amount} + '　' "></td>
-					<td>
-						<input type="button" class="details" th:id="${product.product_id}" value="商品詳細"><!-- onClick="on()" -->
-					</td>
-					<td>
-						&nbsp;&nbsp;<input type="button" id="buy" value= "購入する">
-					</td>
+					<td th:text="'在庫' + ${product.stock_amount} + '　' "></td>
+					<td><input type="button" class="details" th:id="${product.product_id}" value="商品詳細"><!-- onClick="on()" --></td>
+					<td>&nbsp;&nbsp;<input type="button" class="intoCart" th:id="${product.product_id}" value="カートに入れる"></td>
 				</tr>	
 			</table>	
 		</div>
 	</div>
-	<!-- ajax　ボタン -->
-	<input type="button" id="button"  class="button" value="ajaxボタン"/>
+
     <br/>
-    <div id="text" class="text"></div>
-
-
-<!--テキストボックスとかチェックボタンとか-->
-	<!-- <form id = "searchform" action = "search" method = "POST"></form> -->
-    <button id = "searchbtn" type="submit" name = "searchbtn" onclick = "check()">投げる</button>
-  	
-
-    
     
 <script type="text/javascript" th:inline="javascript">
+
 	var id = "detail";
 	function win_open() {
-		window.open("detail","","width=1000,height=700"); 
+		window.open("detail","","width=200,height=50"); 
 	   }
 	
-	//Javascriptで書いたモーダルウィンドウ ？（消しても普通に動く）
-	/* function on() {
-	    document.getElementById("overlay").style.display = "block"; */
-	    /*document.querySelector(this);*/
-		/* var selectNo = $(this);
-		alert(selectNo);
-	} */
-	
-    //モーダルをOFFにする処理
-	function off() {
-	    document.getElementById("overlay").style.display = "none";
-	}
-	
 	//jQueryで書いたモーダルウィンドウ　商品詳細のボタンごとのIDをここで表示させる
-
 	$('.details').on('click', function() {
 		document.getElementById("overlay").style.display = "block";
 		var selectNo = $(this).attr('id');//this は、”押されたボタン”を示す
-		alert(selectNo);
+		//alert(selectNo);
 		//ajaxボタンの下に表示(成功！)
 		$.ajax({
 			type : 'GET',
-			url : 'getProductsId',
+			url : 'getProductsList',
 			dataType : 'json',
 			data : {zaki: selectNo },//JSON形式で書いてる　：で代入する
 			success : function(data) {//サーバーからの値（data)を受け取ってる
 				$('.text').html(data);//表示させる場所を指定してる(text　の属性を持つdivに)
+				console.log(data);
+				$('.table1').attr('src', data[0].image);//第2引数の.imageを、第１引数のsrcにattr(追加)する（つまり、jQueryの属性を追加してる）
+				//$('.table1').attr(data[0].image);    //←この場合ソースは表示されない    
+				$('.table2').text(data[0].product_name); 
+				$('.table3').text(data[0].birthday);     
+				$('.table4').text(data[0].detail);	
 			},
 			error : function(data) {
 				alert('errorだっさ');
 			}
 		});
 	});
+
+	
+    //カートに入れるボタン
+    $('.intoCart').on('click', function() {
+		document.getElementById("cartOverlay").style.display = "block";
+		var inCart = $(this).attr('id');//this は、”押されたボタン”を示す
+		$.ajax({
+			type : 'GET',
+			url : 'getIntoCart',
+			dataType : 'json',
+			data : {inCartHuman: inCart },//JSON形式で書いてる　：で代入する
+			success : function(data) {//サーバーからの値（data)を受け取ってる
+				console.log(data);
+				$('.inCart1').attr('src', data[0].image);//第2引数の.imageを、第１引数のsrcにattr(追加)する（つまり、jQueryの属性を追加してる）
+				$('.inCart2').text(data[0].product_name);
+			},
+			error : function(data) {
+				alert('errorだっさ');
+			}
+		});
+	});
+	function off() {
+	    document.getElementById("overlay","cartOverlay").style.display = "none";
+	}
+	/* function off(){
+    	document.getElementById("cartOverlay").style.display = "none";
+    } */
+	
+    
 		//サンプルのやつ
 	function check() {
 		var jsonString = $('form').serializeArray();
@@ -154,8 +162,6 @@
 		});
 	}	
 
-
-	
 	//目障り画像を消す処理
 	$(function() {
 		$('.delete').click(function() {
@@ -166,20 +172,8 @@
 				$('.face_image').slideDown('slow')
 			}
 		});
-
 	});
 
-	//謎の動き
-	/* 	$(function(){
-	 $('.delete').toggle(
-	 function(){
-	 $('.face_image').slideDown()
-	 },
-	 function(){
-	 $('.face_image').slideUp()
-	 });
-	 });   
-	 */
 </script>
 </body>
 </html>

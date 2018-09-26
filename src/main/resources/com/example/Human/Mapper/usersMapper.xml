@@ -12,7 +12,7 @@
     </insert>
     
     <select id="selectLoginUser" resultType="com.example.Human.entity.Users">
-    	select * from Users where user_id = #{user_id} and password = #{password}
+    	select user_id,password from Users
     </select>
 </mapper>
 
